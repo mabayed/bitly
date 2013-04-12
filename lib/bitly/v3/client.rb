@@ -7,9 +7,11 @@ module Bitly
       include HTTParty
       base_uri 'https://api-ssl.bitly.com/v3/'
 
-      # Requires a login and api key. Get yours from your account page at http://bit.ly/a/account
-      def initialize(login, api_key)
+      # Requires a login and api key. Get yours from your account page at https://bitly.com/a/your_api_key
+      # Visit your account at http://bit.ly/a/account
+      def initialize(login, api_key, timeout=nil)
         @default_query_opts = { :login => login, :apiKey => api_key }
+        self.timeout = timeout
       end
 
       # Validates a login and api key
@@ -120,6 +122,10 @@ module Bitly
         response['data']['results']
       end
 
+      def timeout=(timeout=nil)
+        self.class.default_timeout(timeout) if timeout
+      end
+
       private
 
       def arrayize(arg)
@@ -133,7 +139,13 @@ module Bitly
       def get(method, opts={})
         opts[:query] ||= {}
         opts[:query].merge!(@default_query_opts)
-        response = self.class.get(method, opts)
+
+        begin
+          response = self.class.get(method, opts)
+        rescue Timeout::Error
+          raise BitlyTimeout.new("Bitly didn't respond in time", "504")
+        end
+
         if response['status_code'] == 200
           return response
         else
@@ -189,3 +201,5 @@ module Bitly
     end
   end
 end
+
+class BitlyTimeout < BitlyError; end

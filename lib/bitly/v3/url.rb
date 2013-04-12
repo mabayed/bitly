@@ -114,6 +114,13 @@ module Bitly
         @clicks_by_day
       end
 
+      # QR code is automatically created and can be incorporated
+      # into mobile applications.
+      def qrcode_url(opts={})
+        qrcode = opts.has_key?(:s) ? ".qrcode?s=#{opts[:s]}" : ".qrcode"
+        @short_url + qrcode
+      end
+
       private
 
       def update_clicks_data

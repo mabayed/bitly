@@ -9,9 +9,15 @@ Echoe.new('bitly', Bitly::VERSION) do |p|
   p.author = "Phil Nash"
   p.email = "philnash@gmail.com"
   p.extra_deps = [
-    ['crack', '>= 0.1.4'],
+    ['multi_json', '~> 1.3'],
     ['httparty', '>= 0.7.6'],
     ['oauth2', '>= 0.5.0', '< 0.9']
   ]
-  p.development_dependencies = []
+  p.development_dependencies = [
+    ['echoe'],
+    ['rake'],
+    ['shoulda'],
+    ['flexmock'],
+    ['fakeweb']
+  ]
 end
