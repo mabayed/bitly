@@ -4,10 +4,6 @@ module Bitly
       include HTTParty
       base_uri 'https://api-ssl.bitly.com/v3/'
 
-      def initialize(access_token)
-        @access_token = access_token
-      end
-
 
       # Given a search query, use bit.ly's search API:
       # http://dev.bitly.com/data_apis.html#v3_search
