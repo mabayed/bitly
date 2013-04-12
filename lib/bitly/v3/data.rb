@@ -11,7 +11,7 @@ module Bitly
       # Returns a list of search results
       def search(search_query, opts={})
         raise BitlyError.new("Access token required", 500) unless opts.include? :access_token 
-        opts.reject! {|k, v| ![:limit, :offset, :lang, :cities, :domain, :fields].include? k}
+        opts.reject! {|k, v| ![:limit, :offset, :lang, :cities, :domain, :fields, :access_token].include? k}
 
         result = self.class.get("/search", :query => opts.merge({:query => search_query}))
 
