@@ -111,17 +111,6 @@ module Bitly
         get_method(:clicks_by_day, input, opts)
       end
 
-      # Given a search query, use bit.ly's search API:
-      # http://dev.bitly.com/data_apis.html#v3_search
-      #
-      # Returns a list of search results
-      def search(search_query, opts={})
-        opts.reject! {|k, v| ![:limit, :offset, :lang, :cities, :domain, :fields].include? k}
-        response = get("/search", :query => opts.merge({:query => search_query}))
-
-        response['data']['results']
-      end
-
       def timeout=(timeout=nil)
         self.class.default_timeout(timeout) if timeout
       end
