@@ -98,7 +98,7 @@ module Bitly
             if result_key.nil?
               result['data']
             else
-              result['data'][key]
+              result['data'][result_key]
             end
           else
             raise BitlyError.new(result['status_txt'], result['status_code'])
