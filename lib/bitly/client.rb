@@ -6,33 +6,9 @@ module Bitly
   extend Config
   API_URL     = 'http://api.bit.ly/'
   API_VERSION = '2.0.1'
-
-  def self.new(login, api_key, timeout=nil)
-    if @version == 3
-      Bitly::V3::Client.new(login, api_key, timeout)
-    else
-      Bitly::Client.new(login,api_key)
-    end
+  def self.new(access_token, timeout=nil)
+    Bitly::V4::Client.new(access_token, timeout)
   end
-
-  def self.use_api_version_3
-    @version = 3
-  end
-
-  def self.use_api_version_2
-    @version = 2
-  end
-
-  # get and initialize a client if configured using Config
-  def self.client
-    # api_verison, login, and api_key are set in Config
-    if api_version == 3
-      Bitly::V3::Client.new(login, api_key, timeout)
-    else
-      Bitly::Client.new(login, api_key)
-    end
-  end
-
   class Client
 
     include Bitly::Utils
